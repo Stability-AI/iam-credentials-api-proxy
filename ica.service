@@ -1,0 +1,18 @@
+[Unit]
+Description=Local Proxy Service for IAM Credentials API
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=python3 /root/iam-credentials-api-secret/localhost_proxy.py --host target_hostname 
+ExecReload=/bin/kill -HUP \$MAINPID
+PIDFile=/run/ica.pid
+KillMode=process
+LimitNOFILE=131072
+LimitMEMLOCK=infinity
+LimitSTACK=infinity
+Delegate=yes
+TasksMax=infinity
+[Install]
+WantedBy=multi-user.target graphical.target
