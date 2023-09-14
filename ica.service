@@ -5,7 +5,7 @@ Wants=network.target
 
 [Service]
 Type=simple
-ExecStart=python3 /root/iam-credentials-api-proxy/localhost_proxy.py --host r6sqiplkw2.execute-api.us-west-2.amazonaws.com #target_hostname
+ExecStart=python3 /root/iam-credentials-api-proxy/localhost_proxy.py --host target_hostname
 ExecReload=/bin/kill -HUP $MAINPID
 PIDFile=/run/ica.pid
 KillMode=process
