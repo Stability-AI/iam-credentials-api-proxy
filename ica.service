@@ -2,11 +2,14 @@
 Description=Local Proxy Service for IAM Credentials API
 After=network.target
 Wants=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
 
 [Service]
 Type=simple
 ExecStart=python3 /root/iam-credentials-api-proxy/localhost_proxy.py --host target_hostname
 ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
 PIDFile=/run/ica.pid
 KillMode=process
 LimitNOFILE=131072
