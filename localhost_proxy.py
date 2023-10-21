@@ -45,7 +45,7 @@ class CacheContainer():
                     self.cache_keys.get()
                     continue
                 # If expired or greater than the configured limit remove
-                if datetime.now() >= current["expiration"] or self.max_queue_size < self.cache_keys.qsize():
+                if datetime.now() + timedelta(minutes=5) >= current["expiration"] or self.max_queue_size < self.cache_keys.qsize():
                     self.cache_keys.get()
                     del self.credentials_cache[top]
                     continue
