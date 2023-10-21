@@ -2,7 +2,7 @@
 from http.server import BaseHTTPRequestHandler,HTTPServer
 import argparse, sys, requests
 import threading
-from datetime import datetime
+from datetime import datetime, timedelta
 import queue
 import threading
 from socketserver import ThreadingMixIn
@@ -84,7 +84,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
             resp = None
             if cache.cache_mode == "store":
                 value = cache.get(key)
-                if value is not None and datetime.now() < value["expiration"]:
+                if value is not None and datetime.now() - timedelta(minutes=5) < value["expiration"]:
                     print("Using cached credentials.")
                     resp = value["content"]
             if resp is None:
