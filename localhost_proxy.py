@@ -84,7 +84,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
             resp = None
             if cache.cache_mode == "store":
                 value = cache.get(key)
-                if value is not None and datetime.now() - timedelta(minutes=5) < value["expiration"]:
+                if value is not None and datetime.now() + timedelta(minutes=5) < value["expiration"]:
                     print("Using cached credentials.")
                     resp = value["content"]
             if resp is None:
