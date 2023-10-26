@@ -2,7 +2,7 @@
 from http.server import BaseHTTPRequestHandler,HTTPServer
 import argparse, sys, requests
 import threading
-from datetime import datetime, timedelta
+from datetime import datetime
 import queue
 import threading
 from socketserver import ThreadingMixIn
@@ -45,7 +45,7 @@ class CacheContainer():
                     self.cache_keys.get()
                     continue
                 # If expired or greater than the configured limit remove
-                if datetime.now() + timedelta(minutes=5) >= current["expiration"] or self.max_queue_size < self.cache_keys.qsize():
+                if datetime.now() >= current["expiration"] or self.max_queue_size < self.cache_keys.qsize():
                     self.cache_keys.get()
                     del self.credentials_cache[top]
                     continue
@@ -84,7 +84,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
             resp = None
             if cache.cache_mode == "store":
                 value = cache.get(key)
-                if value is not None and datetime.now() + timedelta(minutes=5) < value["expiration"]:
+                if value is not None and datetime.now() < value["expiration"]:
                     print("Using cached credentials.")
                     resp = value["content"]
             if resp is None:
