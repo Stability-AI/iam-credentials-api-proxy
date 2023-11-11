@@ -7,7 +7,7 @@ StartLimitBurst=3
 
 [Service]
 Type=simple
-ExecStart=python3 /root/iam-credentials-api-proxy/localhost_proxy.py --host target_hostname
+ExecStart=python3 /opt/iam-credentials-api-proxy/localhost_proxy.py --hostname target_hostname
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 PIDFile=/run/ica.pid
